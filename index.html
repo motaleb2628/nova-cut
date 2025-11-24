@@ -41,6 +41,7 @@
                         'float-delayed': 'float 7s ease-in-out 2s infinite',
                         'float-slow': 'float 8s ease-in-out 1s infinite',
                         'float-reverse': 'floatReverse 7s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
                     },
                     keyframes: {
                         float: {
@@ -519,7 +520,7 @@
                 <p class="text-gray-400 text-lg">From long-form storytelling to short viral clips — we cover every format.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Service Cards (Same as before) -->
+                <!-- Service Cards -->
                 <div class="service-card bg-brand-surface border border-white/5 p-6 rounded-xl hover:border-brand-primary/30 hover:bg-[#1e293b] transition-all duration-300 group opacity-0 translate-y-10">
                     <div class="h-12 w-12 bg-gray-800/50 rounded-lg flex items-center justify-center mb-4 text-brand-primary group-hover:scale-110 transition-transform"><i data-lucide="clapperboard" class="w-6 h-6"></i></div>
                     <h3 class="text-xl font-bold text-white mb-2">YouTube Videos</h3>
@@ -549,8 +550,10 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-12 portfolio-header opacity-0 translate-y-10">
                 <h2 class="text-4xl md:text-5xl font-bold text-brand-primary mb-4">Portfolio</h2>
-                <p class="text-gray-400 text-lg">Selected work — click any thumbnail to preview.</p>
+                <p class="text-gray-400 text-lg">Selected work — click to play.</p>
             </div>
+            
+            <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 portfolio-header opacity-0 translate-y-10">
                 <button class="filter-btn active px-6 py-2 rounded-full text-sm font-medium" data-filter="all">All Work</button>
                 <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white" data-filter="youtube">YouTube</button>
@@ -558,50 +561,89 @@
                 <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white" data-filter="saas">SAAS</button>
                 <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white" data-filter="ads">Ads</button>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
-                <!-- Items -->
-                <div class="portfolio-item youtube group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
-                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
-                    <div class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">YouTube</div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-75 group-hover:scale-100"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+
+            <!-- MIXED GRID LAYOUT -->
+            <!-- Using grid-cols-3 for desktop. Row span 2 for center to align perfectly -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr" id="portfolio-grid">
+                
+                <!-- 1. Left Top: YouTube (Landscape) -->
+                <div class="portfolio-item youtube group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, 'LXb3EKWsInQ', false)">
+                    <img src="https://img.youtube.com/vi/LXb3EKWsInQ/maxresdefault.jpg" alt="Nature" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">YouTube</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
                     </div>
                 </div>
-                <div class="portfolio-item shorts group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
-                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
-                    <div class="absolute top-4 left-4 bg-yellow-500 text-black text-xs px-3 py-1 rounded-full font-bold shadow-lg">Shorts</div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-75 group-hover:scale-100"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+
+                <!-- 2. Center: Portrait (Shorts) - Row Span 2 -->
+                <!-- Use h-full on desktop to ensure it stretches to match neighbors -->
+                <div class="portfolio-item shorts group relative rounded-2xl overflow-hidden border border-white/10 bg-black lg:row-span-2 aspect-[9/16] lg:aspect-auto lg:h-full cursor-pointer" onclick="playVideo(this, 't99ULJjCsaM', true)">
+                    <img src="https://img.youtube.com/vi/t99ULJjCsaM/maxresdefault.jpg" alt="Shorts" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-yellow-500 text-black text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">Shorts</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
                     </div>
                 </div>
-                <div class="portfolio-item saas group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
-                    <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
-                    <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">SAAS</div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-75 group-hover:scale-100"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+
+                <!-- 3. Right Top: SAAS (Landscape) -->
+                <div class="portfolio-item saas group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, 'ysz5S6PUM-U', false)">
+                    <img src="https://img.youtube.com/vi/ysz5S6PUM-U/maxresdefault.jpg" alt="Tech" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">SAAS</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
                     </div>
                 </div>
-                <div class="portfolio-item ads group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
-                    <div class="absolute top-4 left-4 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">Ads</div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-75 group-hover:scale-100"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+
+                <!-- 4. Left Bottom: Ads (Landscape) -->
+                <div class="portfolio-item ads group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, 't_jHrUE5IOk', false)">
+                    <img src="https://img.youtube.com/vi/t_jHrUE5IOk/maxresdefault.jpg" alt="Ad" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">Ads</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
                     </div>
                 </div>
-                <div class="portfolio-item youtube group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
-                    <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
-                    <div class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">YouTube</div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-75 group-hover:scale-100"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+
+                <!-- 5. Right Bottom: Landscape (Another Item) -->
+                <div class="portfolio-item youtube group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, '77ZtG7wEiwU', false)">
+                    <img src="https://img.youtube.com/vi/77ZtG7wEiwU/maxresdefault.jpg" alt="Vlog" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">YouTube</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
                     </div>
                 </div>
-                <div class="portfolio-item shorts group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
-                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44c?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
-                    <div class="absolute top-4 left-4 bg-yellow-500 text-black text-xs px-3 py-1 rounded-full font-bold shadow-lg">Shorts</div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-75 group-hover:scale-100"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+                
+                <!-- HIDDEN ITEMS FOR LOAD MORE (Standard Landscape Grid for neatness) -->
+                <div class="portfolio-item youtube hidden-item hidden group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, 'LXb3EKWsInQ', false)">
+                    <img src="https://img.youtube.com/vi/LXb3EKWsInQ/maxresdefault.jpg" alt="Extra" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">YouTube</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
                     </div>
                 </div>
+                 <div class="portfolio-item saas hidden-item hidden group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, 'p5gX1s-Vp24', false)">
+                    <img src="https://img.youtube.com/vi/p5gX1s-Vp24/hqdefault.jpg" alt="Extra" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">SAAS</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+                    </div>
+                </div>
+                 <div class="portfolio-item ads hidden-item hidden group relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video cursor-pointer" onclick="playVideo(this, '77ZtG7wEiwU', false)">
+                    <img src="https://img.youtube.com/vi/77ZtG7wEiwU/maxresdefault.jpg" alt="Extra" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60">
+                    <div class="absolute top-4 left-4 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">Ads</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-brand-primary text-black p-4 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.6)] transform scale-90 group-hover:scale-110 transition-transform"><i data-lucide="play" class="w-6 h-6 fill-current"></i></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Load More Icon -->
+            <div class="flex justify-center mt-12">
+                <button onclick="loadMorePortfolio()" id="load-more-btn" class="group flex flex-col items-center gap-2 text-gray-400 hover:text-brand-primary transition-colors cursor-pointer">
+                    <div class="p-3 rounded-full border border-gray-700 bg-white/5 group-hover:bg-brand-primary/10 group-hover:border-brand-primary transition-all animate-bounce-slow">
+                        <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                    </div>
+                </button>
             </div>
         </div>
     </section>
@@ -963,6 +1005,50 @@
             }
         }
 
+        // --- NEW YOUTUBE PLAY LOGIC ---
+        function playVideo(container, videoId, isShort) {
+            // If already playing, do nothing
+            if(container.querySelector('iframe')) return;
+
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            
+            // Construct iframe URL
+            // Using modestbranding, rel=0, autoplay=1
+            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&controls=1`;
+            
+            // Create iframe
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', embedUrl);
+            iframe.setAttribute('width', '100%');
+            iframe.setAttribute('height', '100%');
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.zIndex = '50';
+
+            // Clear container and append iframe
+            container.innerHTML = '';
+            container.appendChild(iframe);
+        }
+
+        // --- LOAD MORE LOGIC ---
+        function loadMorePortfolio() {
+            const hiddenItems = document.querySelectorAll('.hidden-item');
+            hiddenItems.forEach(item => {
+                item.classList.remove('hidden');
+                // Simple fade in animation
+                gsap.fromTo(item, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+            });
+            // Hide the button after loading
+            const btn = document.getElementById('load-more-btn');
+            gsap.to(btn, { opacity: 0, height: 0, duration: 0.3, onComplete: () => btn.remove() });
+        }
+
+
         function openContactModal() {
             const modal = document.getElementById('contact-modal');
             const modalBox = document.querySelector('.modal-box');
@@ -1213,6 +1299,25 @@
                     btn.classList.add('active'); btn.classList.remove('text-gray-400');
                     const filterValue = btn.getAttribute('data-filter');
                     items.forEach(item => {
+                        // Special logic: Handle Hidden Items properly
+                        // If we are filtering, we might need to "unhide" items to show them if they match filter
+                        if(item.classList.contains('hidden-item')) {
+                             // If filtering specific, show them. If 'all', keep them hidden until load more
+                             if(filterValue !== 'all' && item.classList.contains(filterValue)) {
+                                 item.classList.remove('hidden');
+                                 gsap.to(item, { display: 'block', opacity: 1, scale: 1, duration: 0.4 });
+                                 return;
+                             } else if (filterValue === 'all') {
+                                 // reset to hidden state if we go back to all (unless already loaded)
+                                 const btn = document.getElementById('load-more-btn');
+                                 if(btn) {
+                                    item.classList.add('hidden');
+                                    item.style.display = 'none';
+                                 }
+                                 return; 
+                             }
+                        }
+
                         if (filterValue === 'all' || item.classList.contains(filterValue)) {
                             gsap.to(item, { display: 'block', opacity: 1, scale: 1, duration: 0.4 });
                         } else {
