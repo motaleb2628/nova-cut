@@ -73,6 +73,15 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+        }
+        #mobile-menu.hidden {
+            display: none;
+        }
+
         /* Glow Effects */
         .glow-spot {
             position: fixed;
@@ -253,10 +262,10 @@
         }
         .form-input.error + .error-msg { display: block; }
 
-        /* POPUP ANIMATION (UPDATED SIZE) */
+        /* POPUP ANIMATION */
         .popup-border-anim {
             position: relative;
-            border-radius: 1.5rem; /* Slightly rounder for bigger box */
+            border-radius: 1.5rem;
             z-index: 0;
             overflow: hidden;
         }
@@ -273,7 +282,7 @@
             background: #0f172a;
             border-radius: 1.4rem;
             position: absolute;
-            inset: 3px; /* Thicker border for bigger box */
+            inset: 3px;
             z-index: -1;
         }
         @keyframes spinBorder {
@@ -316,7 +325,7 @@
 
     <!-- NAVBAR -->
     <header class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
-        <nav id="navbar" class="glass-nav w-full max-w-7xl rounded-2xl px-6 py-3 flex justify-between items-center opacity-0 transform -translate-y-10">
+        <nav id="navbar" class="glass-nav w-full max-w-7xl rounded-2xl px-6 py-3 flex justify-between items-center opacity-0 transform -translate-y-10 relative">
             <div class="flex flex-col items-start">
                 <a href="#" class="flex items-center gap-3 group">
                     <div class="bg-brand-primary h-10 w-10 rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(34,211,238,0.2)]">
@@ -326,16 +335,36 @@
                 </a>
             </div>
 
+            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="#wedo" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Services</a>
                 <a href="#portfolio" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Portfolio</a>
                 <a href="#reviews" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Reviews</a>
                 <a href="#workflow" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Workflow</a>
             </div>
+
+            <!-- Mobile Actions -->
             <div class="flex items-center gap-4">
-                <button onclick="openContactModal()" class="bg-brand-button hover:bg-cyan-300 text-black font-bold text-sm px-6 py-2.5 rounded-lg transition-all hover:scale-105 active:scale-95 cursor-pointer">
+                <button onclick="openContactModal()" class="hidden md:block bg-brand-button hover:bg-cyan-300 text-black font-bold text-sm px-6 py-2.5 rounded-lg transition-all hover:scale-105 active:scale-95 cursor-pointer">
                     Get Quote
                 </button>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-btn" onclick="toggleMobileMenu()" class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-2 px-2 md:hidden">
+                <div class="glass-nav rounded-xl p-4 flex flex-col gap-4 shadow-2xl">
+                    <a href="#wedo" class="text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 p-3 rounded-lg transition-all" onclick="toggleMobileMenu()">Services</a>
+                    <a href="#portfolio" class="text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 p-3 rounded-lg transition-all" onclick="toggleMobileMenu()">Portfolio</a>
+                    <a href="#reviews" class="text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 p-3 rounded-lg transition-all" onclick="toggleMobileMenu()">Reviews</a>
+                    <a href="#workflow" class="text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 p-3 rounded-lg transition-all" onclick="toggleMobileMenu()">Workflow</a>
+                    <button onclick="openContactModal(); toggleMobileMenu()" class="bg-brand-button text-black font-bold text-sm px-6 py-3 rounded-lg text-center">
+                        Get Quote
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -372,7 +401,7 @@
                 </div>
             </div>
             <div class="hero-cards relative z-10 flex flex-col gap-6">
-                <!-- Who we serve (With Icons) -->
+                <!-- Who we serve -->
                 <div class="bg-[#0f172a]/60 backdrop-blur-md border border-white/5 p-8 rounded-2xl shadow-xl w-full">
                     <h3 class="text-2xl font-bold text-white mb-2">Who we serve</h3>
                     <p class="text-gray-400 text-sm mb-6">Creators, brands, agencies and podcasters who want premium video assets.</p>
@@ -392,7 +421,7 @@
                     </div>
                 </div>
 
-                <!-- Trusted by 20+ Creators -->
+                <!-- Trusted by -->
                 <div class="w-full flex flex-col md:flex-row gap-4">
                     <!-- Average Rating Box -->
                     <div class="bg-[#0f172a]/60 backdrop-blur-md border border-white/5 p-4 rounded-xl shadow-lg flex items-center gap-4 flex-1">
@@ -530,7 +559,7 @@
                 <button class="filter-btn px-6 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white" data-filter="ads">Ads</button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
-                <!-- Items... (Same as before) -->
+                <!-- Items -->
                 <div class="portfolio-item youtube group relative overflow-hidden rounded-2xl cursor-pointer border border-gray-800 opacity-0 translate-y-10">
                     <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=800&auto=format&fit=crop" alt="Thumbnail" class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60">
                     <div class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">YouTube</div>
@@ -724,7 +753,7 @@
         </div>
     </section>
 
-    <!-- NEW CONTACT CTA SECTION -->
+    <!-- NEW CONTACT CTA SECTION (FIXED MOBILE LOGOS) -->
     <section id="contact" class="py-32 relative flex items-center justify-center overflow-hidden min-h-[600px]">
         <!-- Zap Connection Layer -->
         <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
@@ -733,19 +762,30 @@
             <path d="M100,500 Q400,600 800,500" class="zap-path" style="animation-delay: 2s;" />
         </svg>
 
-        <!-- Floating Software Logos -->
+        <!-- Floating Software Logos (Responsive Layout) -->
         <div class="absolute inset-0 w-full h-full pointer-events-none z-10">
-            <div class="tech-logo adobe-pr w-28 h-28 text-5xl top-10 left-[5%] md:left-[10%] animate-float">Pr</div>
-            <div class="tech-logo adobe-ae w-24 h-24 text-4xl bottom-20 right-[5%] md:right-[10%] animate-float-delayed">Ae</div>
-            <div class="tech-logo ai-badge w-24 h-24 rounded-2xl top-16 right-[10%] md:right-[15%] animate-float-slow flex flex-col gap-1 items-center justify-center">
-                <i data-lucide="bot" class="w-8 h-8"></i> <span class="text-lg font-bold">AI</span>
+            <!-- Pr & Ae together on top for mobile -->
+            <div class="tech-logo adobe-pr w-20 h-20 md:w-28 md:h-28 text-3xl md:text-5xl top-6 left-6 md:top-10 md:left-[10%] animate-float">Pr</div>
+            <div class="tech-logo adobe-ae w-20 h-20 md:w-24 md:h-24 text-3xl md:text-4xl top-6 right-6 md:top-auto md:bottom-20 md:right-[10%] animate-float-delayed">Ae</div>
+            
+            <!-- AI Badge -->
+            <div class="tech-logo ai-badge w-20 h-20 md:w-24 md:h-24 rounded-2xl top-[25%] right-4 md:top-16 md:right-[15%] animate-float-slow flex flex-col gap-1 items-center justify-center">
+                <i data-lucide="bot" class="w-6 h-6 md:w-8 md:h-8"></i> <span class="text-sm md:text-lg font-bold">AI</span>
             </div>
-            <div class="tech-logo adobe-ps w-16 h-16 text-xl top-[50%] left-[5%] animate-float">Ps</div>
-            <div class="tech-logo adobe-ai w-14 h-14 text-lg bottom-32 left-[15%] md:left-[20%] animate-float-slow">Ai</div>
-            <div class="tech-logo capcut-box w-20 h-20 md:top-[60%] right-[3%] md:right-[5%] animate-float-delayed flex items-center justify-center">
-                 <svg viewBox="0 0 512 512" fill="currentColor" class="w-12 h-12"><path d="M120 160h200v20H120zM120 332h200v20H120z" transform="rotate(45 256 256)" opacity="0"/><path d="M140 140 L240 240 L140 340 M372 140 L272 240 L372 340 M140 140 H270 M140 340 H270 M372 140 H242 M372 340 H242" stroke="black" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+            
+            <!-- Ps -->
+            <div class="tech-logo adobe-ps w-14 h-14 md:w-16 md:h-16 text-lg md:text-xl top-[40%] left-4 md:top-[50%] md:left-[5%] animate-float">Ps</div>
+            
+            <!-- Ai -->
+            <div class="tech-logo adobe-ai w-12 h-12 md:w-14 md:h-14 text-md md:text-lg bottom-32 left-8 md:left-[20%] animate-float-slow">Ai</div>
+            
+            <!-- CapCut -->
+            <div class="tech-logo capcut-box w-16 h-16 md:w-20 md:h-20 bottom-24 right-4 md:top-[60%] md:right-[5%] animate-float-delayed flex items-center justify-center">
+                 <svg viewBox="0 0 512 512" fill="currentColor" class="w-10 h-10 md:w-12 md:h-12"><path d="M120 160h200v20H120zM120 332h200v20H120z" transform="rotate(45 256 256)" opacity="0"/><path d="M140 140 L240 240 L140 340 M372 140 L272 240 L372 340 M140 140 H270 M140 340 H270 M372 140 H242 M372 340 H242" stroke="black" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
             </div>
-            <div class="tech-logo canva-bg w-20 h-20 rounded-full text-xl font-bold md:top-[35%] left-[25%] animate-float flex flex-col items-center justify-center">
+            
+            <!-- Canva (Half overlapped on mobile) -->
+            <div class="tech-logo canva-bg w-16 h-16 md:w-20 md:h-20 rounded-full text-md md:text-xl font-bold top-[-30px] left-1/2 -translate-x-1/2 md:top-[35%] md:left-[25%] md:translate-x-0 z-30 flex flex-col items-center justify-center">
                 <span>Canva</span>
             </div>
         </div>
@@ -913,6 +953,16 @@
     <!-- SCRIPTS -->
     <script>
         // GLOBAL FUNCTIONS DEFINED FIRST
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                gsap.fromTo(menu, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.3 });
+            } else {
+                gsap.to(menu, { opacity: 0, y: -20, duration: 0.3, onComplete: () => menu.classList.add('hidden') });
+            }
+        }
+
         function openContactModal() {
             const modal = document.getElementById('contact-modal');
             const modalBox = document.querySelector('.modal-box');
